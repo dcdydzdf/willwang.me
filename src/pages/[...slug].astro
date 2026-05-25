@@ -1,0 +1,44 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("articles");
+
+  return articles.map((article) => ({
+    params: { slug: article.id.split("/").at(-1) },
+    props: { article },
+  }));
+}
+
+interface Props {
+  article: CollectionEntry<"articles">;
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+const categoryLabel =
+  article.data.category.charAt(0).toUpperCase() + article.data.category.slice(1);
+const formatDate = (date: Date) =>
+  date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+---
+
+<BaseLayout title={article.data.title} description={article.data.excerpt}>
+  <article>
+    <header class="article-header">
+      <a class="back-link" href={`/${article.data.category}`}>
+        &larr;&nbsp; Back to {categoryLabel}
+      </a>
+      <div>
+        <span class="article-badge">{categoryLabel}</span>
+      </div>
+      <h1>{article.data.title}</h1>
+      <time class="published" datetime={article.data.date.toISOString()}>
+        {formatDate(article.data.date)}
+      </time>
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,42 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const articles = (await getCollection("articles", ({ data }) => data.category === "literature")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const formatDate = (date: Date) =>
+  date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+const pathFor = (id: string) => `/${id.split("/").at(-1)}`;
+const summarize = (body = "") => {
+  const text = body.replace(/[#>*_[\]]/g, "").replaceAll("`", "").replace(/\s+/g, " ").trim();
+  return text.length > 108 ? `${text.slice(0, 108)}...` : text;
+};
+---
+
+<BaseLayout
+  title="Literature"
+  description="Reading notes and essays on books, language, and enduring ideas."
+>
+  <header class="listing-header container">
+    <span class="eyebrow">Essays</span>
+    <h1>Literature</h1>
+    <p>Reading notes and essays on books, language, and enduring ideas.</p>
+  </header>
+  <section class="container" aria-label="Literature articles">
+    {articles.length === 0 && <div class="empty-state">Coming soon...</div>}
+    <div class="article-list">
+      {
+        articles.map((article) => (
+          <a class="article-card" href={pathFor(article.id)}>
+            <div class="article-meta">
+              <time datetime={article.data.date.toISOString()}>{formatDate(article.data.date)}</time>
+            </div>
+            <h2>{article.data.title}</h2>
+            <p>{article.data.excerpt ?? summarize(article.body)}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

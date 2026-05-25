@@ -1,0 +1,21 @@
+{
+  "name": "willwang.me",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.18.1",
+    "decap-cms": "^3.12.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,61 @@
+backend:
+  name: github
+  repo: dcdydzdf/willwang.me
+  branch: main
+
+publish_mode: editorial_workflow
+media_folder: public/uploads
+public_folder: /uploads
+
+site_url: https://willwang.me
+display_url: https://willwang.me
+logo_url: https://willwang.me/favicon.svg
+
+collections:
+  - name: industry
+    label: Industry Articles
+    label_singular: Industry Article
+    folder: src/content/articles/industry
+    create: true
+    extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    summary: "{{title}} - {{date}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime, date_format: YYYY-MM-DD, time_format: false }
+      - { label: Category, name: category, widget: hidden, default: industry }
+      - { label: Excerpt, name: excerpt, widget: text, required: false, hint: "Optional short summary displayed in listings." }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: literature
+    label: Literature Articles
+    label_singular: Literature Article
+    folder: src/content/articles/literature
+    create: true
+    extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    summary: "{{title}} - {{date}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime, date_format: YYYY-MM-DD, time_format: false }
+      - { label: Category, name: category, widget: hidden, default: literature }
+      - { label: Excerpt, name: excerpt, widget: text, required: false, hint: "Optional short summary displayed in listings." }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: reflections
+    label: Reflections Articles
+    label_singular: Reflections Article
+    folder: src/content/articles/reflections
+    create: true
+    extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    summary: "{{title}} - {{date}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime, date_format: YYYY-MM-DD, time_format: false }
+      - { label: Category, name: category, widget: hidden, default: reflections }
+      - { label: Excerpt, name: excerpt, widget: text, required: false, hint: "Optional short summary displayed in listings." }
+      - { label: Body, name: body, widget: markdown }

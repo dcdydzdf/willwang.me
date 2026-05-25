@@ -1,0 +1,105 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Will Wang",
+  description = "Essays on industry, literature, and reflection by Will Wang.",
+} = Astro.props;
+const pageTitle = title === "Will Wang" ? title : `${title} | Will Wang`;
+const pathname = Astro.url.pathname;
+const links = [
+  { href: "/industry", label: "Industry" },
+  { href: "/literature", label: "Literature" },
+  { href: "/reflections", label: "Reflections" },
+  { href: "/contact", label: "Contact" },
+];
+const active = (href: string) =>
+  pathname === href || (href !== "/contact" && pathname.startsWith(`${href}/`));
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0a0a0f" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="site-nav container" aria-label="Primary navigation">
+        <a class="brand" href="/" aria-label="Will Wang home">Will Wang</a>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="Open navigation"
+          aria-controls="nav-links"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+        </button>
+        <div class="nav-links" id="nav-links">
+          {
+            links.map((link) => (
+              <a
+                href={link.href}
+                class:list={["nav-link", { active: active(link.href) }]}
+                aria-current={active(link.href) ? "page" : undefined}
+              >
+                {link.label}
+              </a>
+            ))
+          }
+        </div>
+      </nav>
+    </header>
+    <main class="page-shell">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <span>&copy; {new Date().getFullYear()} Will Wang</span>
+      </div>
+    </footer>
+    <script is:inline>
+      const button = document.querySelector(".menu-toggle");
+      const navigation = document.querySelector(".nav-links");
+
+      const closeMenu = () => {
+        navigation?.classList.remove("open");
+        button?.setAttribute("aria-expanded", "false");
+        button?.setAttribute("aria-label", "Open navigation");
+      };
+
+      button?.addEventListener("click", () => {
+        const isOpen = navigation?.classList.toggle("open") ?? false;
+        button.setAttribute("aria-expanded", String(isOpen));
+        button.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeMenu();
+      });
+
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        link.addEventListener("click", closeMenu);
+      });
+    </script>
+  </body>
+</html>
