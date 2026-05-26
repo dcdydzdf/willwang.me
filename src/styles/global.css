@@ -1,12 +1,12 @@
 :root {
-  --bg: #e8e4dd;
-  --surface: #f3efe8;
-  --surface-raised: #faf7f1;
-  --text: #2a2620;
-  --muted: #827d75;
+  --bg: #f4efe6;
+  --surface: #fcf8f1;
+  --surface-raised: #fffcf7;
+  --text: #25221d;
+  --muted: #7e786c;
   --accent: #7d6843;
   --accent-soft: rgba(125, 104, 67, 0.1);
-  --border: #d6d0c6;
+  --border: #ddd6ca;
   --border-active: rgba(125, 104, 67, 0.3);
   --max-width: 1160px;
   --reading-width: 760px;
@@ -54,8 +54,8 @@ p {
   position: fixed;
   inset: 0 0 auto;
   z-index: 20;
-  border-bottom: 1px solid rgba(214, 208, 198, 0.7);
-  background: rgba(232, 228, 221, 0.78);
+  border-bottom: 1px solid rgba(221, 214, 202, 0.7);
+  background: rgba(244, 239, 230, 0.78);
   backdrop-filter: blur(18px);
 }
 
@@ -497,7 +497,7 @@ p {
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 0.4rem;
-    background: rgba(243, 239, 232, 0.98);
+    background: rgba(252, 248, 241, 0.98);
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
   }
 
